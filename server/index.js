@@ -9,9 +9,11 @@ import ChatRoute from './routes/ChatRoute.js';
 const app = express();
 const PORT = 8000;
 let DB = [];
-// const uri = "mongodb+srv://gazi:<cs326>@chatr.jwbbusf.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://gazi:cs326@chatr.jwbbusf.mongodb.net/?retryWrites=true&w=majority";
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-const client = new OAuth2Client(GOOGLE_CLIENT_ID);
+const client = new OAuth2Client(
+ process.env.GOOGLE_CLIENT_ID,
+);
 
 app.use(
   cors({
@@ -47,7 +49,6 @@ app.post("/signup", async (req, res) => {
       }
 
       const profile = verificationResponse?.payload;
-
       DB.push(profile);
 
       res.status(201).json({
@@ -110,15 +111,11 @@ app.post("/login", async (req, res) => {
   }
 });
 
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
-// mongoose
-//   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => app.listen(PORT, () => console.log(`Listening at Port ${PORT}`)))
-//   .catch((error) => console.log(`${error} did not connect`));
-
-// app.get('/',  (req, res) => {
-//     res.send('Welcome');
-// });
+app.get('/',  (req, res) => {
+    res.send('Welcome');
+});
  
 app.listen(PORT, () => {
     console.log("Server listening on PORT", PORT);
