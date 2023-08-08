@@ -2,12 +2,13 @@ import React from "react";
 
 const Home = ({ user }) => {
   const logout = () => {
-    localStorage.removeItem("user");
-    window.location.reload();
+    window.open('http://localhost:8000/logout', "_self");
   };
+
+  
   return (
     <div style={{ textAlign: "center", margin: "3rem" }}>
-      <h1>Dear {user?.email}</h1>
+      <h1>Dear {user?.displayName}</h1>
 
       <p>
         You are viewing this page because you are logged in or you just signed
