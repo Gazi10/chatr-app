@@ -1,11 +1,11 @@
 import React from "react";
 
 const Home = ({ user }) => {
+
   const logout = () => {
     window.open('http://localhost:8000/logout', "_self");
   };
 
-  
   return (
     <div style={{ textAlign: "center", margin: "3rem" }}>
       <h1>Dear {user?.displayName}</h1>

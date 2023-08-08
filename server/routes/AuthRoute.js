@@ -1,5 +1,6 @@
 import express from "express";
 import passport from "passport";
+import UserModel from "../models/userModel.js";
 
 const CLIENT_URL = "http://localhost:3000/";
 
@@ -23,13 +24,28 @@ router.get("/login/failed", (req, res) => {
   });
 });
 
-router.get("/logout", (req, res) => {
+router.get("/logout", async (req, res) => {
+  await UserModel.findOneAndUpdate(
+    { id: req.user.id },
+    { $set: { token: '' } },
+  );
   req.session = null;
   req.logout();
   res.redirect(CLIENT_URL);
 });
 
-router.get("/login", passport.authenticate("google", { scope: ["profile"], prompt: 'select_account' }));
+router.get(
+  "/login",
+  passport.authenticate("google", {
+    scope: [
+      "profile",
+      "email",
+      "https://www.googleapis.com/auth/gmail.readonly",
+      "https://www.googleapis.com/auth/gmail.send",
+    ],
+    prompt: "select_account",
+  })
+);
 
 router.get(
   "/google/callback",
