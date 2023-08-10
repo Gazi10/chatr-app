@@ -26,6 +26,7 @@ passport.use(
           id: profile.id,
           email: profile.emails[0].value,
           name: profile.displayName,
+          picture: profile.photos[0].value,
           token: accessToken
         }).save();  
       } else {
@@ -33,7 +34,7 @@ passport.use(
           { id: profile.id },
           { $set: { token: accessToken } },
         );
-      }  
+      }
       return done(null, profile);
     }
   )

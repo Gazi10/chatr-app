@@ -8,6 +8,7 @@ import ChatRoute from './routes/ChatRoute.js';
 import passportSetup from './passport.js'
 import authRoute from './routes/AuthRoute.js'
 import emailRoute from './routes/EmailRoute.js'
+import messageRoute from './routes/MessageRoute.js'
 
 const app = express();
 const PORT = 8000;
@@ -37,3 +38,4 @@ app.listen(PORT, () => {
 app.use("/", authRoute);
 app.use('/email', emailRoute);
 app.use('/chat', ChatRoute);
+app.use('/message', messageRoute);

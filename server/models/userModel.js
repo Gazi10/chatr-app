@@ -14,6 +14,14 @@ const UserSchema = mongoose.Schema(
             type: String,
             required: true
         },
+        inbox: {
+            type: Array,
+            default: [],
+        },
+        picture: {
+            type: String,
+            required: true
+        },
         token: {
             type: String,
             required: true

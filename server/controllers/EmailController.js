@@ -84,3 +84,51 @@ export const readMail = async (req, res) => {
     res.send(error);
   }
 };
+
+export const getThread = async (req, res) => {
+  try {
+    const url = `https://gmail.googleapis.com/gmail/v1/users/apptester763@gmail.com/threads/${req.params.threadId}`;
+    const user  = await UserModel.find({email: "apptester763@gmail.com"});
+    const token = user[0].token;
+    const config = generateConfig(url, token);
+    const response = await axios(config);
+
+    let data = await response.data;
+
+    res.json(data);
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const readAllMail = async (req, res) => {
+  try {
+    const url = `https://gmail.googleapis.com/gmail/v1/users/${req.params.email}/messages`;
+    const user  = await UserModel.find({email: req.params.email});
+    const token = user[0].token;
+    const config = generateConfig(url, token);
+    const response = await axios(config);
+
+    let data = await response.data;
+
+    res.json(data);
+  } catch (error) {
+    res.send(error);
+  }
+}
+
+export const getAllThread = async (req, res) => {
+  try {
+    const url = `https://gmail.googleapis.com/gmail/v1/users/${req.params.email}/threads`;
+    const user  = await UserModel.find({email: req.params.email});
+    const token = user[0].token;
+    const config = generateConfig(url, token);
+    const response = await axios(config);
+
+    let data = await response.data;
+
+    res.json(data);
+  } catch (error) {
+    res.send(error);
+  }
+}
